@@ -203,6 +203,9 @@ client/
 
 ## Deployment
 
+Deployment link: https://github.com/PLP-MERN-Stack-Development/week-5-web-sockets-assignment-j-captain.git
+
+
 ### Backend
 Deploy to services like:
 - Render
