@@ -2,33 +2,19 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
-    // Choose the correct URI based on environment
-    const mongoURI = process.env.MONGO_URI || 
-      (process.env.NODE_ENV === 'production' 
-        ? process.env.MONGO_URI_PROD 
-        : process.env.MONGO_URI_DEV);
-
+    // Use Render's environment variable or fall back to local
+    const mongoURI = process.env.MONGODB_URI || 
+                     process.env.MONGO_URI_PROD || 
+                     process.env.MONGO_URI;
+    
     if (!mongoURI) {
-      throw new Error(`
-        MongoDB URI is missing. Set one of these in .env:
-        - MONGO_URI (universal)
-        - MONGO_URI_DEV (development)
-        - MONGO_URI_PROD (production)
-      `);
+      throw new Error('MongoDB connection string not configured');
     }
 
-    await mongoose.connect(mongoURI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    });
-
-    console.log();
-    console.log('✅ Success!! Connected to MongoDB');
-    console.log(`🔗 Using: ${mongoURI.includes('localhost') ? 'Local DB' : 'Production DB'}`);
+    await mongoose.connect(mongoURI);
+    console.log('✅ MongoDB Connected');
   } catch (error) {
-    console.log();
-    console.error(`❌ Sorry!! MongoDB connection Error: ${error.message}`);
-    console.log();
+    console.error(`❌ MongoDB Connection Error: ${error.message}`);
     process.exit(1);
   }
 };

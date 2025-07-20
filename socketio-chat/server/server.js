@@ -630,24 +630,16 @@ connectDB().then(async () => {
   await initializeDefaultRooms();
   
   const PORT = process.env.PORT || 5000;
-  server.listen(PORT, () => {
+  server.listen(PORT, '0.0.0.0', () => {  // Added '0.0.0.0'
     console.log(`
     \x1b[45m\x1b[30m┌─────────────────────────────────────┐\x1b[0m
     \x1b[45m\x1b[30m│ 🚀 SERVER LAUNCH SUCCESSFUL          │\x1b[0m
     \x1b[45m\x1b[30m├─────────────────────────────────────┤\x1b[0m
     │ ${colorful.success(`Port: ${PORT}`)}
     │ ${colorful.success(`Database: Connected`)}
+    │ ${colorful.info(`Host: 0.0.0.0`)}  // Added host display
     │ ${colorful.info(`Ready for connections`)}
     \x1b[45m\x1b[30m└─────────────────────────────────────┘\x1b[0m
-    
-    \x1b[32m     .d8888b.  888     888 
-    d88P  Y88b 888     888 
-    888    888 888     888 
-    888        888     888 
-    888  88888 888     888 
-    888    888 888     888 
-    Y88b  d88P Y88b. .d88P 
-     "Y8888P88  "Y88888P"  \x1b[0m
     `);
   });
 }).catch(err => {
